@@ -9,10 +9,28 @@ const Axios = axios.create({
     responseType: 'json',
 })
 
-const getPokemonsList = () => {
-    return Axios.get(`${API_URL}/pokemon?limit=20`)
+const getPokemonsList = ({ url = undefined, offset = undefined }) => {
+    let urlRequest = `${API_URL}/pokemon`
+
+    if (url) {
+        urlRequest = url
+    }
+    if (offset) {
+        urlRequest += `?offset=${offset}&limit=20`
+    }
+    return Axios.get(urlRequest)
+}
+
+const getPokemon = (name) => {
+    return Axios.get(`${API_URL}/pokemon/${name}`)
+}
+
+const getPokemonColor = (id) => {
+    return Axios.get(`${API_URL}/pokemon-color/${id}/`)
 }
 
 export {
     getPokemonsList,
+    getPokemon,
+    getPokemonColor
 }
