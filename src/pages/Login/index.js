@@ -5,7 +5,9 @@ import { TextField, Button } from '@material-ui/core'
 
 const Login = () => {
     const [email, setEmail] = useState('')
+    const [emailError, setEmailError] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
     function handleChange(event) {
         if (event.target.id === 'e-mail') {
@@ -17,7 +19,18 @@ const Login = () => {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log('On handle submit');
+        if (email === "") {
+            setEmailError('Write your email')
+            return
+        }
+        if (password === "") {
+            setPasswordError('Write your password')
+            return
+        }
+
+        if ((email === "poc_app@mail.com") && (password === "123")) {
+            localStorage.setItem('logged', true)
+        }
     }
 
     return (
@@ -34,6 +47,8 @@ const Login = () => {
                         value={ email }
                         style={ { marginBottom: 20 } }
                         variant="filled"
+                        helperText={ (emailError) ? emailError : '' }
+                        error={ (passwordError) ? true : false }
                         fullWidth
                     />
                 </div>
@@ -46,6 +61,8 @@ const Login = () => {
                         value={ password }
                         style={ { marginBottom: 20 } }
                         variant="filled"
+                        helperText={ (passwordError) ? passwordError : '' }
+                        error={ (passwordError) ? true : false }
                         fullWidth
                     />
                 </div>
