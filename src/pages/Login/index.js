@@ -47,8 +47,8 @@ const Login = () => {
                         value={ email }
                         style={ { marginBottom: 20 } }
                         variant="filled"
-                        helperText={ (emailError) ? emailError : '' }
-                        error={ (passwordError) ? true : false }
+                        helperText={ (emailError !== '') ? emailError : '' }
+                        error={ (emailError !== '') ? true : false }
                         fullWidth
                     />
                 </div>
@@ -61,8 +61,8 @@ const Login = () => {
                         value={ password }
                         style={ { marginBottom: 20 } }
                         variant="filled"
-                        helperText={ (passwordError) ? passwordError : '' }
-                        error={ (passwordError) ? true : false }
+                        helperText={ (passwordError !== '') ? passwordError : '' }
+                        error={ (passwordError !== '') ? true : false }
                         fullWidth
                     />
                 </div>
