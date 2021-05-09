@@ -5,7 +5,8 @@ import {
   Route,
 } from 'react-router-dom'
 
-// import ProtectedRoute from './ProtectedRoute'
+import ProvideAuth from './ProvideAuth'
+import PrivateRoute from './PrivateRoute'
 
 // Pages
 import Login from './pages/Login/'
@@ -13,22 +14,21 @@ import Dashboard from './pages/Dashboard'
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/dashboard">
-          <Dashboard />
-        </Route>
-        <Route path="/" exact>
-          <Dashboard />
-        </Route>
-      </Switch>
-      {/* <ProtectedRoute path="/home" component={ Home } isAuth={ false } />
-      <ProtectedRoute path="/details" component={ Details } isAuth={ false } /> */}
-
-    </Router>
+    <ProvideAuth>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute path="/dashboard">
+            <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute path="/" exact>
+            <Dashboard />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    </ProvideAuth>
   );
 }
 

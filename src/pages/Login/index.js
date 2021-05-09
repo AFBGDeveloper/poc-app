@@ -1,9 +1,13 @@
 import './login.css'
 import React, { useState } from 'react'
-
+import { useHistory, useLocation } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import { TextField, Button } from '@material-ui/core'
 
 const Login = () => {
+    const history = useHistory()
+    const location = useLocation()
+    const auth = useAuth()
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
     const [password, setPassword] = useState('')
@@ -19,6 +23,7 @@ const Login = () => {
 
     function handleSubmit(e) {
         e.preventDefault()
+        console.log("into")
         if (email === "") {
             setEmailError('Write your email')
             return
@@ -28,8 +33,10 @@ const Login = () => {
             return
         }
 
-        if ((email === "poc_app@mail.com") && (password === "123")) {
-            localStorage.setItem('logged', true)
+        let { from } = location.state || { from: { pathname: '/login' } }
+        const response = auth.signIn(email, password)
+        if (response) {
+            history.replace(from)
         }
     }
 
@@ -57,6 +64,7 @@ const Login = () => {
                     <TextField
                         id="password"
                         label="Password"
+                        type="password"
                         onChange={ handleChange }
                         value={ password }
                         style={ { marginBottom: 20 } }
@@ -68,13 +76,13 @@ const Login = () => {
                 </div>
 
                 <div className="login-actions-container">
-                    <Button
+                    {/* <Button
                         variant="outlined"
                         color="default"
                         onClick={ handleSubmit }
                     >
                         Signin
-                    </Button>
+                    </Button> */}
                     <Button
                         variant="contained"
                         color="default"

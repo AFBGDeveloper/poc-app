@@ -2,11 +2,12 @@ import './dashboard.css'
 import React from 'react'
 import {
     Switch,
-    Route,
     NavLink,
     useRouteMatch,
 } from 'react-router-dom'
 import Icon from '@material-ui/core/Icon'
+import ProvideAuth from '../../ProvideAuth'
+import PrivateRoute from '../../PrivateRoute'
 
 // Pages
 import Home from '../Home'
@@ -18,21 +19,23 @@ const Dashboard = () => {
 
     return (
         <>
-            <Switch>
-                <Route path={ `${path}/details/:name` }>
-                    <Details />
-                </Route>
-                <Route path={ `${path}/home` }>
-                    <Home />
-                </Route>
-                <Route path={ `${path}/favorites` }>
-                    <Favorites />
-                </Route>
-                <Route path={ `${path}/` } exact>
-                    <Home />
-                </Route>
-            </Switch>
+            <ProvideAuth>
+                <Switch>
+                    <PrivateRoute path={ `${path}/details/:name` }>
+                        <Details />
+                    </PrivateRoute>
+                    <PrivateRoute path={ `${path}/home` }>
+                        <Home />
+                    </PrivateRoute>
+                    <PrivateRoute path={ `${path}/favorites` }>
+                        <Favorites />
+                    </PrivateRoute>
+                    <PrivateRoute path={ `${path}/` } exact>
+                        <Home />
+                    </PrivateRoute>
+                </Switch>
 
+            </ProvideAuth>
             <div className="bottom-tab-bar">
                 <NavLink
                     to={ `${url}/home` }
