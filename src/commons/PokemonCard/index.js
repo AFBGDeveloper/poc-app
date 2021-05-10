@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import Favorite from '@material-ui/icons/Favorite'
 import { getPokemon } from '../../services/Api'
+import useFavorites from '../../hooks/useFavorites'
 
-const PokemonCard = ({ name, id }) => {
+const PokemonCard = ({ id, name, imageUrl }) => {
+    const { isFavorite, addFavorite, removeFavorite } = useFavorites(name)
+
     const [img, setImg] = useState('')
     const [favorite, setFavorite] = useState(false)
 
@@ -22,9 +25,20 @@ const PokemonCard = ({ name, id }) => {
         return () => mounted = false
     }, [name, id])
 
+    useEffect(() => {
+        if (isFavorite(name)) {
+            setFavorite(true)
+        }
+    }, [name, isFavorite, favorite])
+
     const handleFavorite = () => {
-        console.log("Changing favorite", favorite)
-        setFavorite(!favorite)
+        if (favorite) {
+            removeFavorite(name)
+            setFavorite(false)
+        } else {
+            addFavorite({ name, url: img })
+            setFavorite(true)
+        }
     }
 
     return (

@@ -3,14 +3,11 @@ import IconButton from '@material-ui/core/IconButton'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { useHistory } from 'react-router-dom'
 import PokemonsList from '../../commons/PokemonsList'
-
-const POKEMONSLIST = [
-    { name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/" },
-    { name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon/2/" }
-]
+import useFavorites from '../../hooks/useFavorites'
 
 const Favorites = () => {
     const history = useHistory()
+    const { favorites } = useFavorites()
 
     const handleRedirect = () => {
         history.push('/dashboard/home')
@@ -29,7 +26,7 @@ const Favorites = () => {
 
             <main className="home-main">
                 <section>
-                    <PokemonsList list={ POKEMONSLIST } />
+                    <PokemonsList list={ favorites } />
                 </section>
             </main>
         </>
